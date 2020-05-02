@@ -18,6 +18,7 @@ HS_FILE = "highscore.txt"
 RED =(255,0,0)
 GREEN= (0,255,0)
 BLUE = (0,0,255)
+YELLOW = (255,255, 0)
 WHITE =(255,255,255)
 BLACK =(0,0,0)
 GRAVITY = 0.8
@@ -134,6 +135,7 @@ class Dinosaur(pygame.sprite.Sprite):
                 self.rect = self.image.get_rect()
                 self.rect.bottom = bottom
                 self.rect.centerx = 100
+            self.kill()
 
     def jump(self):
         if self.rect.bottom == HEIGHT - 28:
@@ -145,6 +147,7 @@ class Dinosaur(pygame.sprite.Sprite):
         self.death = True
         self.jumping = False
         self.running = False
+
 
     def update(self):
         # any code here will happen every time the game loop updates
@@ -224,7 +227,8 @@ class Cactus(pygame.sprite.Sprite):
             posx02 += width02
         """for frame in self.cacti_frames02:
             frame.set_colorkey(BLACK)"""
-        self.cacti_frames03 = [spritesheet.get_image(432, 2, 50 , 50 )]
+        #self.cacti_frames03 = [spritesheet.get_image(432, 2, 50 , 50 )]
+        self.cacti_frames03 = [spritesheet.get_image(432, 2, 15 , 50 ),spritesheet.get_image(447,2,35, 50 )]
         """for frame in self.cacti_frames03:
             frame.set_colorkey(BLACK)"""
         self.cacti_frames01 += self.cacti_frames02 + self.cacti_frames03
@@ -247,16 +251,18 @@ class Cactus(pygame.sprite.Sprite):
         for i in range(nSprites):
             tSprite = random.randrange(0,11)
             #print(tSprite)
+            #tSprite = 10
             if tSprite == 10:
                 self.image.blit(self.cacti_frames01[tSprite],(0,0))
+                self.image.blit(self.cacti_frames01[tSprite+1],(self.cacti_frames01[tSprite].get_rect().width -2.5,0))
                 break
             if tSprite in range(0,6):
                 self.image.blit(self.cacti_frames01[tSprite],(widthPrev,50-self.cacti_frames01[tSprite].get_rect().height-2))
             else:
                 self.image.blit(self.cacti_frames01[tSprite],(widthPrev,50-self.cacti_frames01[tSprite].get_rect().height))
-            widthPrev += self.cacti_frames01[tSprite].get_rect().width
+            widthPrev += self.cacti_frames01[tSprite].get_rect().width -1
         self.image.set_colorkey(BLACK)
-        self.mask = pygame.mask.from_surface(self.image)
+        #self.mask = pygame.mask.from_surface(self.image)
         #self.mimage = pygame.Surface((75,50)).convert()
         """olist = self.mask.outline()
         pygame.draw.lines(self.image, (BLUE),1,olist)"""
@@ -266,14 +272,16 @@ class Cactus(pygame.sprite.Sprite):
         # any code here will happen every time the game loop updates
         #self.animate()
         self.rect.x -= 5
+        if self.rect.x <=-75:
+            self.kill()
 
 all_sprites = pygame.sprite.Group()
 cactus_sprites = pygame.sprite.Group()
-dino = Dinosaur()
+#dino = Dinosaur()
 #cactus = Cactus() #need it
 #all_sprites.add(cactus)
 #cactus_sprites.add(cactus)
-all_sprites.add(dino)
+#all_sprites.add(dino)
 """def redrawWindow():
     #largeFont = pygame.font.SysFont('comicsans', 30)
     screen.blit(bg, (bgX, HEIGHT-20))
@@ -310,7 +318,7 @@ while waiting:
         if event.type == pygame.KEYUP:
             waiting = False
 #cactus_ind = 0
-def draw_window(dinos, cactus_list,cactus_ind):
+def draw_window(dinos, cactus_list,cactus_ind, olist, re):
     """
     draws the windows for the main game loop
     :param win: pygame window surface
@@ -327,12 +335,16 @@ def draw_window(dinos, cactus_list,cactus_ind):
             #print("dino  ", dino.rect.x )
             #pygame.draw.line(screen, RED, (100 , dino.rect.y),  (cactus_list[cactus_ind].rect.x, 0), 5)
             try:
-                pygame.draw.line(screen, RED, (dino.rect.x + dino.rect.width , dino.rect.y), (cactus_list[cactus_ind].rect.x,cactus_list[cactus_ind].rect.y), 5)
+                #print(max(olist)[0])
+                #print(min(olist)[1])
+                #print(cactus_list[cactus_ind].rect.bottom)
+                #pygame.draw.line(screen, RED, (dino.rect.x + dino.rect.width , dino.rect.y), (cactus_list[cactus_ind].rect.x,cactus_list[cactus_ind].rect.y), 5)
                 pygame.draw.line(screen, GREEN, (dino.rect.x + dino.rect.width , dino.rect.y), (cactus_list[cactus_ind].rect.x,cactus_list[cactus_ind].rect.y + cactus_list[cactus_ind].rect.height ), 5)
+                pygame.draw.line(screen, BLACK, (dino.rect.x + dino.rect.width , dino.rect.y), (cactus_list[cactus_ind].rect.x + re[0].width,cactus_list[cactus_ind].rect.bottom), 5)
+                pygame.draw.line(screen, YELLOW, (dino.rect.x + dino.rect.width , dino.rect.y), (cactus_list[cactus_ind].rect.x,cactus_list[cactus_ind].rect.bottom- re[0].height), 5)
                 #print("enter ", cactus_list[cactus_ind])
-                #pygame.draw.line(screen, (255,0,0), (bird.x+bird.img.get_width()/2, bird.y + bird.img.get_height()/2), (pipes[pipe_ind].x + pipes[pipe_ind].PIPE_BOTTOM.get_width()/2, pipes[pipe_ind].bottom), 5)
             except Exception as e:
-                #print(e)
+                print(e)
                 pass
 
     pygame.display.update()
@@ -348,6 +360,7 @@ def eval_genomes(genomes, config):
     dinos = []
     ge = []
     cactus_ind = 0
+    cactus_jumped = 0
 
 
 
@@ -359,6 +372,9 @@ def eval_genomes(genomes, config):
         all_sprites.add(dino)
         dinos.append(dino)
         ge.append(genome)
+
+    print(len(dinos))
+    #print(len(nets))
 
     cactus_list = []
     cactus = Cactus()
@@ -389,9 +405,10 @@ def eval_genomes(genomes, config):
             screen.blit(bg, (rel_x,HEIGHT- 40))
             #bg.set_colorkey(BLACK)
         x -= 5
-        if x % random.randrange(200,800,200) == 0:
+        if x % random.randrange(200,600,200) == 0:
             cactus = Cactus()
             cactus_list.append(cactus)
+            #print("original cactus length", len(cactus_list))
             #cactus_list = [cactus]
             #print("dd ",cactus_list)
             all_sprites.add(cactus)
@@ -402,15 +419,43 @@ def eval_genomes(genomes, config):
         # Process input (events)
         #cactus_ind = 0
         #global cactus_ind
-        if len(dinos) > 0:
+        """if len(dinos) > 0:
             if len(dinos) > 1 and dinos[0].rect.x > cactus_list[cactus_ind].rect.x + 75:  # determine whether to use the first or second
                 cactus_ind += 1
                 #print (cactus_ind)
             #before nice lines
-            """cactus_list[cactus_ind].mask = pygame.mask.from_surface(cactus_list[cactus_ind].image)
+            cactus_list[cactus_ind].mask = pygame.mask.from_surface(cactus_list[cactus_ind].image)
             #self.mimage = pygame.Surface((75,50)).convert()
             olist = cactus_list[cactus_ind].mask.outline()
             pygame.draw.lines(cactus_list[cactus_ind].image, (BLUE),1,olist)"""
+        if len(dinos) > 0:
+            if dinos[0].rect.x > cactus_list[cactus_ind].rect.x + 75:  # determine whether to use the first or second
+                #cactus_ind += 1
+                cactus_jumped += 1
+                cactus_list.pop(0)
+                #cactus_ind = 1
+                #print("jumped ",cactus_jumped )
+                #print("correct ", len(cactus_list))
+                #print (cactus_ind)
+            #before nice lines
+            try:
+                cactus_list[cactus_ind].mask = pygame.mask.from_surface(cactus_list[cactus_ind].image)
+                re = cactus_list[cactus_ind].mask.get_bounding_rects()
+                #re = cactus_list[cactus_ind].mask.get_rect()
+                olist = cactus_list[cactus_ind].mask.outline()
+                #print("max width", max(olist)[0])
+                #print("width  ",re[0].width)
+                #print(max(olist)[0])
+                #print(max(olist)[1])
+                #print(max(olist))
+                #pygame.draw.lines(cactus_list[cactus_ind].image, (BLUE),5,olist)
+                pygame.draw.polygon(cactus_list[cactus_ind].image,(BLUE),olist, 0)
+            except Exception as e:
+                print("eg ex ", e)
+                print(cactus_ind)
+                print("length of cactus_list", len(cactus_list))
+
+
 
         for event in pygame.event.get():
             # check for closing window
@@ -428,9 +473,14 @@ def eval_genomes(genomes, config):
             #output = nets[dinos.index(dino)].activate((dino.rect.x + dino.rect.width, abs(cactus_list[cactus_ind].rect.x - (dino.rect.x + dino.rect.width)),cactus_list[cactus_ind].rect.x + 75, cactus_list[cactus_ind].rect.y))
             #pygame.draw.line(screen, RED, (dino.rect.x + dino.rect.width , dino.rect.y), (cactus_list[cactus_ind].rect.x,cactus_list[cactus_ind].rect.y), 5)
             #pygame.draw.line(screen, GREEN, (dino.rect.x + dino.rect.width , dino.rect.y), (cactus_list[cactus_ind].rect.x,cactus_list[cactus_ind].rect.y + cactus_list[cactus_ind].rect.height ), 5)
-            ar01=math.hypot(((dino.rect.x + dino.rect.width)-cactus_list[cactus_ind].rect.x),(dino.rect.y-cactus_list[cactus_ind].rect.y))
-            ar02=math.hypot(((dino.rect.x + dino.rect.width)-cactus_list[cactus_ind].rect.x),(dino.rect.y-(cactus_list[cactus_ind].rect.y + cactus_list[cactus_ind].rect.height )))
-            output = nets[dinos.index(dino)].activate((dino.rect.x + dino.rect.width, ar01,ar02, cactus_list[cactus_ind].rect.x + 75))
+            #pygame.draw.line(screen, BLACK, (dino.rect.x + dino.rect.width , dino.rect.y), (cactus_list[cactus_ind].rect.x + re[0].width,cactus_list[cactus_ind].rect.bottom), 5)
+            #pygame.draw.line(screen, YELLOW, (dino.rect.x + dino.rect.width , dino.rect.y), (cactus_list[cactus_ind].rect.x,cactus_list[cactus_ind].rect.bottom- re[0].height), 5)
+            ar01=math.hypot(((dino.rect.x + dino.rect.width)-cactus_list[cactus_ind].rect.x),(dino.rect.y-cactus_list[cactus_ind].rect.y))#RED
+            ar02=math.hypot(((dino.rect.x + dino.rect.width)-cactus_list[cactus_ind].rect.x),(dino.rect.y-(cactus_list[cactus_ind].rect.y + cactus_list[cactus_ind].rect.height )))#GREEN
+            ar01A=math.hypot(((dino.rect.x + dino.rect.width)-cactus_list[cactus_ind].rect.x),(dino.rect.y-(cactus_list[cactus_ind].rect.bottom- re[0].height)))#YELLOW
+            ar03=math.hypot(((dino.rect.x + dino.rect.width)-(cactus_list[cactus_ind].rect.x + re[0].width)),(dino.rect.y-cactus_list[cactus_ind].rect.bottom)) #BLACK
+            #output = nets[dinos.index(dino)].activate((dino.rect.x + dino.rect.width, ar01,ar02, cactus_list[cactus_ind].rect.x + 75))
+            output = nets[dinos.index(dino)].activate((dino.rect.x + dino.rect.width, ar01A,ar02, ar03))
 
             if output[0] > 0.5:  # we use a tanh activation function so result will be between -1 and 1. if over 0.5 jump
                 dino.jump()
@@ -456,7 +506,8 @@ def eval_genomes(genomes, config):
                 nets.pop(dinos.index(dino))
                 ge.pop(dinos.index(dino))
                 dinos.pop(dinos.index(dino))
-                dino.kill()
+                #dino.kill()
+                print("left ", len(dinos))
                 #running = False
 
 
@@ -474,7 +525,7 @@ def eval_genomes(genomes, config):
         # *after* drawing everything, flip the display
         #draw_window(dinos,cactus_list, cactus_ind)
         pygame.display.update()
-        draw_window(dinos,cactus_list, cactus_ind)
+        draw_window(dinos,cactus_list, cactus_ind, olist ,re)
         #clock.tick(FPS)
     #pygame.quit()
     cactus_sprites.empty()
