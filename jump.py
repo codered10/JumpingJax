@@ -321,16 +321,12 @@ while waiting:
 def draw_window(dinos, cactus_list,cactus_ind, olist, re):
     """
     draws the windows for the main game loop
-    :param win: pygame window surface
-    :param bird: a Bird object
-    :param pipes: List of pipes
     :param score: score of the game (int)
     :param gen: current generation
-    :param pipe_ind: index of closest pipe
     :return: None
     """
     for dino in dinos:
-        # draw lines from bird to pipe
+        # draw lines from dino to cacti
         if True:
             #print("dino  ", dino.rect.x )
             #pygame.draw.line(screen, RED, (100 , dino.rect.y),  (cactus_list[cactus_ind].rect.x, 0), 5)
@@ -353,7 +349,7 @@ def eval_genomes(genomes, config):
 #def loop():
     """
     runs the simulation of the current population of
-    birds and sets their fitness based on the distance they
+    dinos and sets their fitness based on the distance they
     reach in the game.
     """
     nets = []
@@ -466,15 +462,9 @@ def eval_genomes(genomes, config):
                 if event.key == pygame.K_SPACE:
                     dino.jump()"""
 
-        for x0, dino in enumerate(dinos):  # give each bird a fitness of 0.1 for each frame it stays alive
+        for x0, dino in enumerate(dinos):  # give each dino a fitness of 0.1 for each frame it stays alive
             ge[x0].fitness += 0.1
-            #bird.move()
-            # send bird location, top pipe location and bottom pipe location and determine from network whether to jump or not
-            #output = nets[dinos.index(dino)].activate((dino.rect.x + dino.rect.width, abs(cactus_list[cactus_ind].rect.x - (dino.rect.x + dino.rect.width)),cactus_list[cactus_ind].rect.x + 75, cactus_list[cactus_ind].rect.y))
-            #pygame.draw.line(screen, RED, (dino.rect.x + dino.rect.width , dino.rect.y), (cactus_list[cactus_ind].rect.x,cactus_list[cactus_ind].rect.y), 5)
-            #pygame.draw.line(screen, GREEN, (dino.rect.x + dino.rect.width , dino.rect.y), (cactus_list[cactus_ind].rect.x,cactus_list[cactus_ind].rect.y + cactus_list[cactus_ind].rect.height ), 5)
-            #pygame.draw.line(screen, BLACK, (dino.rect.x + dino.rect.width , dino.rect.y), (cactus_list[cactus_ind].rect.x + re[0].width,cactus_list[cactus_ind].rect.bottom), 5)
-            #pygame.draw.line(screen, YELLOW, (dino.rect.x + dino.rect.width , dino.rect.y), (cactus_list[cactus_ind].rect.x,cactus_list[cactus_ind].rect.bottom- re[0].height), 5)
+            # send distance from top of cacti, distance from the base of cacti and width of cacti to determine from the network whether to jump or not
             ar01=math.hypot(((dino.rect.x + dino.rect.width)-cactus_list[cactus_ind].rect.x),(dino.rect.y-cactus_list[cactus_ind].rect.y))#RED
             ar02=math.hypot(((dino.rect.x + dino.rect.width)-cactus_list[cactus_ind].rect.x),(dino.rect.y-(cactus_list[cactus_ind].rect.y + cactus_list[cactus_ind].rect.height )))#GREEN
             ar01A=math.hypot(((dino.rect.x + dino.rect.width)-cactus_list[cactus_ind].rect.x),(dino.rect.y-(cactus_list[cactus_ind].rect.bottom- re[0].height)))#YELLOW
@@ -533,7 +523,7 @@ def eval_genomes(genomes, config):
 
 def run(config_file):
     """
-    runs the NEAT algorithm to train a neural network to play flappy bird.
+    runs the NEAT algorithm to train a neural network to play dino game.
     :param config_file: location of config file
     :return: None
     """
