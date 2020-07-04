@@ -1,11 +1,13 @@
 # JumpingJax
+My rendition of Google Chrome Dino Game, played by an AI
+
 # Overview
-My rendition of Google Chrome Dino Game, played by an AI 
+Recreated the game from scratch in Python using Pygame module and used NEAT-Python to teach AI to play this game.
 
 # Instruction
-Install the packages mentioned in requriements.txt file and run jump.py file. Sit back and see AI play the game to perfection!
+Install the packages mentioned in requirements.txt file and run jump.py file. Sit back and see AI play the game to perfection!
 
-# Link to YouTube Video!
+# Link to the YouTube Video!
 https://www.youtube.com/watch?v=0BkXaa3Oklk
 
 # Thanks to Timothy Ruscica from Tech with Tim Youtube Channel
