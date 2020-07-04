@@ -1,5 +1,5 @@
 # JumpingJax
-My rendition of Google Chrome Dino Game, played by an AI
+My rendition of Google Chrome Dino Game, played by an AI.
 
 # Overview
 Recreated the game from scratch in Python using Pygame module and used NEAT-Python to teach AI to play this game.
