@@ -15,6 +15,8 @@ Install the packages mentioned in requirements.txt file and run jump.py file. Si
 ## Original Game on Google Chrome
 >![Chrome Dinosaur Game](https://i.makeagif.com/media/7-04-2020/xs0_98.gif)
 
+>![Google Chrome Dinosaur Game](https://i.makeagif.com/media/7-04-2020/2to-k1.gif)
+
 ## Thanks to Timothy Ruscica from Tech with Tim Youtube Channel
 Tech with Tim
 ><https://github.com/techwithtim/NEAT-Flappy-Bird>
