@@ -10,7 +10,10 @@ Install the packages mentioned in requirements.txt file and run jump.py file. Si
 ## Link to the YouTube Video!
 ><https://www.youtube.com/watch?v=0BkXaa3Oklk><br/>
 
-[![AI Plays Chrome Dino Game! #Pygame & #NEAT-Python](https://i.makeagif.com/media/7-04-2020/S8POnF.gif)](https://www.youtube.com/watch?v=0BkXaa3Oklk)
+>[![AI Plays Chrome Dino Game! #Pygame & #NEAT-Python](https://i.makeagif.com/media/7-04-2020/S8POnF.gif)](https://www.youtube.com/watch?v=0BkXaa3Oklk)
+
+## Original Game on Google Chrome
+![Chrome Dinosaur Game](https://i.makeagif.com/media/7-04-2020/8t6EtK.gif)
 
 ## Thanks to Timothy Ruscica from Tech with Tim Youtube Channel
 Tech with Tim
