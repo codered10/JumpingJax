@@ -9,7 +9,6 @@ Install the packages mentioned in requirements.txt file and run jump.py file. Si
 
 ## Link to the YouTube Video!
 ><https://www.youtube.com/watch?v=0BkXaa3Oklk>
-[![Demo CountPages alpha](https://share.gifyoutube.com/KzB6Gb.gif)](https://www.youtube.com/watch?v=ek1j272iAmc)
 [![AI Plays Chrome Dino Game! #Pygame & #NEAT-Python](https://i.makeagif.com/media/7-04-2020/S8POnF.gif)](https://www.youtube.com/watch?v=0BkXaa3Oklk)
 
 ## Thanks to Timothy Ruscica from Tech with Tim Youtube Channel
