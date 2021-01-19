@@ -19,4 +19,4 @@ Tech with Tim
 ## The Original Game on Google Chrome
 >![Google Chrome Dinosaur Game](https://i.makeagif.com/media/1-19-2021/qJUXoP.gif)
 
->![Chrome Dinosaur Game](https://i.makeagif.com/media/7-04-2020/xs0_98.gif)
+>![Chrome Dinosaur Game](https://i.makeagif.com/media/1-19-2021/uoXzPg.gif)
